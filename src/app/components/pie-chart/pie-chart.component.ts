@@ -2,23 +2,17 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 import * as d3 from 'd3';
 import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
-import {AsyncPipe, JsonPipe} from '@angular/common';
 import {dataFeature} from '../../../store/data.reducer';
 
 
-interface onInit {
-  category: string;
-  value: number;
-}
-
-interface DataItem {
+export interface DataItem {
   category: string;
   value: number;
 }
 
 @Component({
   selector: 'app-pie-chart',
-  imports: [AsyncPipe, JsonPipe],
+  imports: [],
   templateUrl: './pie-chart.component.html',
   standalone: true,
   styleUrl: './pie-chart.component.less'
@@ -26,7 +20,7 @@ interface DataItem {
 
 export class PieChartComponent implements OnInit, AfterViewInit {
   @ViewChild('chartContainer', {static: false}) chartContainer!: ElementRef;
-  feature$: Observable<any>;
+  feature$: Observable<DataItem[]>;
 
   private svg: any;
   private width = 400;
@@ -44,7 +38,7 @@ export class PieChartComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.feature$.subscribe(data => {
       // console.log(' Данные из Store:', data);
-      // console.log(' chartContainer:', this.chartContainer); // Проверяем, что он существует
+      // console.log(' chartContainer:', this.chartContainer);
       if (this.chartContainer && data.length > 0) {
         this.createChart(data);
       }
@@ -52,13 +46,13 @@ export class PieChartComponent implements OnInit, AfterViewInit {
   }
 
 
-  private createChart(data: { category: string; value: number }[]): void {
+  private createChart(data: DataItem[]): void {
+    const element = this.chartContainer.nativeElement;
 
-    console.log('createChart', data);
-    d3.select(this.chartContainer.nativeElement).selectAll('*').remove();
+    d3.select(element).selectAll('*').remove();
 
     this.svg = d3
-      .select(this.chartContainer.nativeElement)
+      .select(element)
       .append('svg')
       .attr('width', this.width)
       .attr('height', this.height)

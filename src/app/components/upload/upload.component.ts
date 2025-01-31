@@ -34,7 +34,7 @@ export class UploadComponent {
       try {
         if (typeof reader.result === "string") {
           const jsonData = JSON.parse(reader.result);
-          this.store.dispatch(actions({data: jsonData}));
+          this.store.dispatch(actions.setData({data: jsonData}));
         }
 
       } catch (error) {
