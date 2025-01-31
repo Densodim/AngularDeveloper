@@ -1,0 +1,44 @@
+<p-card>
+  <h2>Данные</h2>
+
+  <!-- Поле для ввода минимального значения -->
+  <div class="p-field">
+    <label for="minValue">Минимальное значение:</label>
+    <p-inputNumber
+      id="minValue"
+      [(ngModel)]="minValue"
+      (onBlur)="updateMinValue()"
+      [showButtons]="true"
+      mode="decimal"
+    ></p-inputNumber>
+  </div>
+
+  <!-- Таблица с сортировкой -->
+  <p-table [value]="data$ | async" [paginator]="true" [rows]="5">
+    <ng-template pTemplate="header">
+      <tr>
+        <th
+          [ngClass]="{'sorted': sortBy === 'category'}"
+          (click)="sort('category')"
+        >
+          Категория
+          <span class="sort-icon" [ngClass]="{'asc': sortDirection === 1, 'desc': sortDirection === -1}"></span>
+        </th>
+        <th
+          [ngClass]="{'sorted': sortBy === 'value'}"
+          (click)="sort('value')"
+        >
+          Значение
+          <span class="sort-icon" [ngClass]="{'asc': sortDirection === 1, 'desc': sortDirection === -1}"></span>
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>{{ item.category }}</td>
+        <td>{{ item.value }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
