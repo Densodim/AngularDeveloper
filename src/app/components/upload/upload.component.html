@@ -1,8 +1,17 @@
 <p-fileUpload
-  mode="basic"
+  mode="advanced"
   chooseLabel="Выбрать JSON"
   (onSelect)="onFileSelected($event)"
   accept=".json">
+  <ng-template pTemplate="file" let-file>
+    <div *ngIf="selectedFileName">
+      <strong>{{ selectedFileName }}</strong>
+    </div>
+  </ng-template>
 </p-fileUpload>
+
+<div>
+  <app-file-history></app-file-history>
+</div>
 
 

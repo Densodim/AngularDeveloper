@@ -3,11 +3,9 @@ import {DataAction} from './data.reducer';
 
 interface Action {
   type: '[Actin Data] Value'
-  category: string
-  value: number
 }
 
-export const actions = {
+export const dataActions = {
   setLoading: createAction('[Actin Data] Set Loading', props<{ data: DataAction[] }>()),
   setData: createAction('[Actin Data] Value', props<{ data: { category: string, value: number }[] }>()),
   setMinValue: createAction('[Actin Data] Set Min Value', props<{ minValue: number }>()),

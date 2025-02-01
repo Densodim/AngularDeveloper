@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 import * as d3 from 'd3';
 import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
-import {dataFeature} from '../../../store/data.reducer';
+import {selectData} from '../../../store/data/data.reducer';
 
 
 export interface DataItem {
@@ -29,7 +29,7 @@ export class PieChartComponent implements OnInit, AfterViewInit {
 
 
   constructor(private store: Store<{ data: any }>) {
-    this.feature$ = this.store.select(dataFeature.selectData);
+    this.feature$ = this.store.select(selectData);
   }
 
   ngOnInit(): void {

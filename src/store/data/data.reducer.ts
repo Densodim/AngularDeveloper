@@ -1,8 +1,8 @@
 import {createFeature, createReducer, on} from '@ngrx/store';
-import {actions} from "./data.actions";
+import {dataActions} from "./data.actions";
 
 
-export interface State {
+interface State {
   data: DataAction[];
   originalData: DataAction[];
   loading: boolean;
@@ -43,16 +43,16 @@ const filterData = (data: DataAction[], minValue: number) => {
 };
 
 
-export const dataFeature = createFeature({
+export const dataReducer = createFeature({
   name: 'Data',
   reducer: createReducer(
     initialState,
-    on(actions.setLoading, (state) => ({
+    on(dataActions.setLoading, (state) => ({
       ...state,
       loading: true,
     })),
     // Загружаем данные
-    on(actions.setData, (state, {data}) => {
+    on(dataActions.setData, (state, {data}) => {
       const filteredData = filterData(data, state.minValue);
       return {
         ...state,
@@ -61,7 +61,7 @@ export const dataFeature = createFeature({
         loading: false
       }
     }),// Устанавливаем данные и сортируем, если указано поле сортировки
-    on(actions.setMinValue, (state, {minValue}) => {
+    on(dataActions.setMinValue, (state, {minValue}) => {
       const filteredData = filterData(state.originalData, minValue);
       return {
         ...state,
@@ -69,7 +69,7 @@ export const dataFeature = createFeature({
         data: state.sortBy ? sortData(filteredData, state.sortBy, state.sortDirection) : filteredData,
       }
     }),
-    on(actions.sortData, (state, {field, direction}) => ({
+    on(dataActions.sortData, (state, {field, direction}) => ({
       ...state,
       sortBy: field,
       data: sortData(state.data, field, direction),
@@ -82,5 +82,7 @@ export const {
   reducer,
   selectDataState,
   selectData,
-  selectLoading
-} = dataFeature
+  selectLoading,
+  selectMinValue,
+  selectOriginalData,
+} = dataReducer

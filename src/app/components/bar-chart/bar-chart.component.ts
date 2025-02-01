@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {Observable} from 'rxjs';
 import {DataItem} from '../pie-chart/pie-chart.component';
 import {Store} from '@ngrx/store';
-import {dataFeature} from '../../../store/data.reducer';
+import {selectData} from '../../../store/data/data.reducer';
 import * as d3 from 'd3';
 
 @Component({
@@ -14,7 +14,6 @@ import * as d3 from 'd3';
 })
 export class BarChartComponent implements AfterViewInit {
   @ViewChild('chartContainer', {static: false}) chartContainer!: ElementRef;
-  // @ViewChild('tooltip', {static: false}) tooltip!: ElementRef;
   feature$: Observable<DataItem[]>;
 
   private svg: any;
@@ -23,7 +22,7 @@ export class BarChartComponent implements AfterViewInit {
   private margin = {top: 20, right: 30, bottom: 40, left: 50};
 
   constructor(private store: Store<{ data: any }>) {
-    this.feature$ = this.store.select(dataFeature.selectData);
+    this.feature$ = this.store.select(selectData);
   }
 
   ngAfterViewInit(): void {
@@ -38,7 +37,6 @@ export class BarChartComponent implements AfterViewInit {
 
   private createChart(data: DataItem[]): void {
     const element = this.chartContainer.nativeElement;
-    // const tooltip = this.tooltip.nativeElement;
 
     // Очищаем контейнер перед отрисовкой
     d3.select(element).selectAll('*').remove();

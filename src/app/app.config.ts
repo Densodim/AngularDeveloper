@@ -5,10 +5,13 @@ import {provideClientHydration, withEventReplay} from '@angular/platform-browser
 import {provideHttpClient} from '@angular/common/http';
 import {provideStoreDevtools} from '@ngrx/store-devtools';
 import {provideState, provideStore} from '@ngrx/store';
-import {dataFeature} from '../store/data.reducer';
+import {dataReducer} from '../store/data/data.reducer';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {providePrimeNG} from 'primeng/config';
 import Aura from '@primeng/themes/aura';
+import {fileReducer} from '../store/file/file.reducer';
+import {provideEffects} from '@ngrx/effects';
+import {FileEffects} from '../store/file/file.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +20,9 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideHttpClient(),
     provideStore(),
-    provideState(dataFeature),
+    provideState(dataReducer),
+    provideState(fileReducer),
+    provideEffects({FileEffects}),
     provideStoreDevtools({maxAge: 25, logOnly: !isDevMode()}),
     provideAnimationsAsync(),
     providePrimeNG({

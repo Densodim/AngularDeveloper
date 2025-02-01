@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {actions} from '../../../store/data.actions';
-import {dataFeature} from '../../../store/data.reducer';
+import {dataActions} from '../../../store/data/data.actions';
+import {selectData, selectLoading, selectMinValue} from '../../../store/data/data.reducer';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {Card} from 'primeng/card';
@@ -32,15 +32,15 @@ export class DataViewComponent implements OnInit {
   sortDirection: number = 1;  // 1 — по возрастанию, -1 — по убыванию
 
   constructor(private store: Store<{ data: any }>) {
-    this.data$ = this.store.select(dataFeature.selectData);
-    this.loading$ = this.store.select(dataFeature.selectLoading);
-    this.minValue$ = this.store.select(dataFeature.selectMinValue);
+    this.data$ = this.store.select(selectData);
+    this.loading$ = this.store.select(selectLoading);
+    this.minValue$ = this.store.select(selectMinValue);
   }
 
   ngOnInit() {}
 
   updateMinValue() {
-    this.store.dispatch(actions.setMinValue({minValue: this.minValue}));
+    this.store.dispatch(dataActions.setMinValue({minValue: this.minValue}));
   }
 
   sort(field: 'category' | 'value') {
@@ -52,7 +52,7 @@ export class DataViewComponent implements OnInit {
       this.sortDirection = 1; // По умолчанию сортируем по возрастанию
     }
     // Передаем данные в стор для сортировки
-    this.store.dispatch(actions.sortData({field: this.sortBy, direction: this.sortDirection === 1 ? 'asc' : 'desc'}));
+    this.store.dispatch(dataActions.sortData({field: this.sortBy, direction: this.sortDirection === 1 ? 'asc' : 'desc'}));
 
   }
 

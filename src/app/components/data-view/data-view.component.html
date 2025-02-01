@@ -1,9 +1,9 @@
 <p-card>
-  <h2>Данные</h2>
+  <h2>Data</h2>
 
   <!-- Поле для ввода минимального значения -->
   <div class="p-field">
-    <label for="minValue">Минимальное значение:</label>
+    <label for="minValue">Min Value:</label>
     <p-inputNumber
       id="minValue"
       [(ngModel)]="minValue"
@@ -21,14 +21,14 @@
           [ngClass]="{'sorted': sortBy === 'category'}"
           (click)="sort('category')"
         >
-          Категория
+          Category
           <span class="sort-icon" [ngClass]="{'asc': sortDirection === 1, 'desc': sortDirection === -1}"></span>
         </th>
         <th
           [ngClass]="{'sorted': sortBy === 'value'}"
           (click)="sort('value')"
         >
-          Значение
+          Value
           <span class="sort-icon" [ngClass]="{'asc': sortDirection === 1, 'desc': sortDirection === -1}"></span>
         </th>
       </tr>
