@@ -5,12 +5,14 @@ import {selectHistory, selectSelectedFileName} from '../../../store/file/file.re
 import {TableModule} from 'primeng/table';
 import {AsyncPipe} from '@angular/common';
 import {fileActions} from '../../../store/file/file.actions';
+import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-file-history',
   imports: [
     TableModule,
-    AsyncPipe
+    AsyncPipe,
+    Button
   ],
   templateUrl: './file-history.component.html',
   standalone: true,
@@ -31,7 +33,6 @@ export class FileHistoryComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {}
 
   selectFile(fileName: string): any {
-    console.log(fileName)
     this.store.dispatch(fileActions.selectFileFromHistory({fileName}))
   }
 

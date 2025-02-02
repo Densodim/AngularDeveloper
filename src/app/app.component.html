@@ -1,44 +1,23 @@
-<style>
-  main {
-    width: 100%;
-    min-height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    box-sizing: inherit;
-    position: relative;
-  }
-
-
-  .content {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    max-width: 700px;
-    margin-bottom: 3rem;
-  }
-
-</style>
-
 <main class="main">
   <div class="content">
 
+    <header class="upload section-box">
+      <Upload></Upload>
+    </header>
 
-    <Upload></Upload>
-    <h2>Содержимое NgRx Store:</h2>
-    <pre>{{ data$ | async | json }}</pre>
+    <div class="dataView section-box">
+      <app-data-view></app-data-view>
+    </div>
 
-    <h2>Круговая диаграмма</h2>
-    <app-pie-chart></app-pie-chart>
-    <h2>Гистограмма</h2>
-    <app-bar-chart></app-bar-chart>
+    <div class="pieChart">
+      <app-pie-chart></app-pie-chart>
+    </div>
+
+    <div class="barChart">
+      <app-bar-chart></app-bar-chart>
+    </div>
+
   </div>
-
-  <app-data-view></app-data-view>
-
-
-
 </main>
 
 

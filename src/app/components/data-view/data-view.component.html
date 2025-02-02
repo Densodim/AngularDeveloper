@@ -1,7 +1,6 @@
 <p-card>
   <h2>Data</h2>
 
-  <!-- Поле для ввода минимального значения -->
   <div class="p-field">
     <label for="minValue">Min Value:</label>
     <p-inputNumber
@@ -9,11 +8,20 @@
       [(ngModel)]="minValue"
       (onBlur)="updateMinValue()"
       [showButtons]="true"
+      buttonLayout="horizontal"
+      spinnerMode="horizontal"
+      [step]="2"
       mode="decimal"
-    ></p-inputNumber>
+    >
+      <ng-template #incrementbuttonicon>
+        <span class="pi pi-plus"></span>
+      </ng-template>
+      <ng-template #decrementbuttonicon>
+        <span class="pi pi-minus"></span>
+      </ng-template>
+    </p-inputNumber>
   </div>
 
-  <!-- Таблица с сортировкой -->
   <p-table [value]="data$ | async" [paginator]="true" [rows]="5">
     <ng-template pTemplate="header">
       <tr>

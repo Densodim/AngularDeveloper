@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {CommonModule} from '@angular/common';
-import {FileUploadModule} from 'primeng/fileupload';
+import {FileSelectEvent, FileUploadModule} from 'primeng/fileupload';
 import {dataActions} from '../../../store/data/data.actions';
 import {FileHistoryComponent} from '../file-history/file-history.component';
 import {fileActions} from '../../../store/file/file.actions';
@@ -29,7 +29,9 @@ export class UploadComponent {
     });
   }
 
-  onFileSelected(event: any) {
+  onFileSelected(event: FileSelectEvent) {
+
+
     const file = event.files[0]; // PrimeNG возвращает объект с массивом `files`
     if (!file) return;
 

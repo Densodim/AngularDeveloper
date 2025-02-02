@@ -1,0 +1,22 @@
+@upload-padding: 10px;
+@upload-gap: 6px;
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.uploadFile {
+  .flex-center();
+  padding: @upload-padding;
+  gap: @upload-gap;
+}
+
+.uploadNameFile {
+  .flex-center();
+  padding: @upload-padding;
+  gap: @upload-gap;
+  font-size: 18px;
+  font-weight: bold;
+}

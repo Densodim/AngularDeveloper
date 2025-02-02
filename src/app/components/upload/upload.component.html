@@ -1,15 +1,15 @@
-<p-fileUpload
-  mode="advanced"
-  chooseLabel="Выбрать JSON"
-  (onSelect)="onFileSelected($event)"
-  accept=".json">
-  <ng-template pTemplate="file" let-file>
-    <div *ngIf="selectedFileName">
-      <strong>{{ selectedFileName }}</strong>
-    </div>
-  </ng-template>
-</p-fileUpload>
-
+<div class="uploadFile">
+  <p-fileUpload
+    mode="basic"
+    chooseLabel="Choose file JSON"
+    chooseIcon="pi pi-upload"
+    [auto]="true"
+    (onSelect)="onFileSelected($event)"
+    accept=".json"/>
+</div>
+<div *ngIf="selectedFileName" class="uploadNameFile">
+  {{ selectedFileName }}
+</div>
 <div>
   <app-file-history></app-file-history>
 </div>

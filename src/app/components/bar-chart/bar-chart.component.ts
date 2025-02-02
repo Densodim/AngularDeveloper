@@ -27,8 +27,6 @@ export class BarChartComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.feature$.subscribe(data => {
-      console.log('🔥 Данные из Store:', data);
-
       if (this.chartContainer?.nativeElement && data.length > 0) {
         this.createChart(data);
       }
