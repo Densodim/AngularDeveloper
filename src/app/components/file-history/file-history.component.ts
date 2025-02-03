@@ -1,39 +1,37 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import {Store} from '@ngrx/store';
-import {selectHistory, selectSelectedFileName} from '../../../store/file/file.reducer';
-import {TableModule} from 'primeng/table';
-import {AsyncPipe} from '@angular/common';
-import {fileActions} from '../../../store/file/file.actions';
-import {Button} from 'primeng/button';
+import { AfterViewInit, Component, OnInit } from "@angular/core"
+import { Observable } from "rxjs"
+import { injectFileFeature } from "../../../store/file/file.reducer"
+import { TableModule } from "primeng/table"
+import { AsyncPipe } from "@angular/common"
+import { Button } from "primeng/button"
+import { MessageServiceComponent } from "../../../lib/message-service/message-service.component"
+import { toObservable } from "@angular/core/rxjs-interop"
 
 @Component({
-  selector: 'app-file-history',
-  imports: [
-    TableModule,
-    AsyncPipe,
-    Button
-  ],
-  templateUrl: './file-history.component.html',
+  selector: "app-file-history",
+  imports: [TableModule, AsyncPipe, Button],
+  templateUrl: "./file-history.component.html",
   standalone: true,
-  styleUrl: './file-history.component.less'
+  styleUrl: "./file-history.component.less",
 })
 export class FileHistoryComponent implements OnInit, AfterViewInit {
-  fileHistory$: Observable<any>;
-  selectedFile$: Observable<string | null>;
+  readonly fileFeature = injectFileFeature()
+  fileHistory$: Observable<any> = toObservable(this.fileFeature.selectHistory())
+  selectedFile$: Observable<string | null> = toObservable(
+    this.fileFeature.selectFileFromHistory(),
+  )
 
-
-  constructor(private store: Store) {
-    this.fileHistory$ = this.store.select(selectHistory);
-    this.selectedFile$ = this.store.select(selectSelectedFileName);
+  constructor(private message: MessageServiceComponent) {
+    // this.fileHistory$ = this.store.select(selectHistory);
+    // this.selectedFile$ = this.store.select(selectSelectedFileName);
   }
 
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {}
 
-  selectFile(fileName: string): any {
-    this.store.dispatch(fileActions.selectFileFromHistory({fileName}))
+  selectFile(fileName: string) {
+    this.fileFeature.FileFromHistory(fileName)
+    this.message.showSuccess("File Selected successfully.")
   }
-
 }

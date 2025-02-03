@@ -5,7 +5,7 @@
     chooseIcon="pi pi-upload"
     [auto]="true"
     (onSelect)="onFileSelected($event)"
-    accept=".json"/>
+    accept=".json"></p-fileUpload>
 </div>
 <div *ngIf="selectedFileName" class="uploadNameFile">
   {{ selectedFileName }}

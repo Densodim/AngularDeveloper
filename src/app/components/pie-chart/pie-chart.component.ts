@@ -1,91 +1,91 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import * as d3 from 'd3';
-import {Observable} from 'rxjs';
-import {Store} from '@ngrx/store';
-import {selectData} from '../../../store/data/data.reducer';
-
-
-export interface DataItem {
-  category: string;
-  value: number;
-}
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from "@angular/core"
+import * as d3 from "d3"
+import { Observable } from "rxjs"
+import { injectDataFeature } from "../../../store/data/data.reducer"
+import { DataActionType } from "../../../types/data.types"
+import { toObservable } from "@angular/core/rxjs-interop"
 
 @Component({
-  selector: 'app-pie-chart',
+  selector: "app-pie-chart",
   imports: [],
-  templateUrl: './pie-chart.component.html',
+  templateUrl: "./pie-chart.component.html",
   standalone: true,
-  styleUrl: './pie-chart.component.less'
+  styleUrl: "./pie-chart.component.less",
 })
-
 export class PieChartComponent implements OnInit, AfterViewInit {
-  @ViewChild('chartContainer', {static: false}) chartContainer!: ElementRef;
-  feature$: Observable<DataItem[]>;
+  @ViewChild("chartContainer", { static: false }) chartContainer!: ElementRef
+  readonly dataFeature = injectDataFeature()
+  dataFeature$: Observable<DataActionType[]> = toObservable(
+    this.dataFeature.selectData(),
+  )
 
-  private svg: any;
-  private width = 400;
-  private height = 400;
-  private radius = Math.min(this.width, this.height) / 2;
+  private svg: any
+  private width = 400
+  private height = 400
+  private radius = Math.min(this.width, this.height) / 2
 
+  constructor() {}
 
-  constructor(private store: Store<{ data: any }>) {
-    this.feature$ = this.store.select(selectData);
-  }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    this.feature$.subscribe(data => {
+    this.dataFeature$.subscribe((data) => {
       // console.log(' Данные из Store:', data);
       // console.log(' chartContainer:', this.chartContainer);
       if (this.chartContainer && data.length > 0) {
-        this.createChart(data);
+        this.createChart(data)
       }
-    });
+    })
   }
 
+  private createChart(data: DataActionType[]): void {
+    const element = this.chartContainer.nativeElement
 
-  private createChart(data: DataItem[]): void {
-    const element = this.chartContainer.nativeElement;
-
-    d3.select(element).selectAll('*').remove();
+    d3.select(element).selectAll("*").remove()
 
     this.svg = d3
       .select(element)
-      .append('svg')
-      .attr('width', this.width)
-      .attr('height', this.height)
-      .append('g')
-      .attr('transform', `translate(${this.width / 2}, ${this.height / 2})`);
+      .append("svg")
+      .attr("width", this.width)
+      .attr("height", this.height)
+      .append("g")
+      .attr("transform", `translate(${this.width / 2}, ${this.height / 2})`)
 
-    const pie = d3.pie<{ category: string; value: number }>().value(d => d.value);
-    const data_ready = pie(data);
+    const pie = d3
+      .pie<{ category: string; value: number }>()
+      .value((d) => d.value)
+    const data_ready = pie(data)
 
-    const arc = d3.arc<any>().innerRadius(0).outerRadius(this.radius);
-    const color = d3.scaleOrdinal(d3.schemeCategory10);
+    const arc = d3.arc<any>().innerRadius(0).outerRadius(this.radius)
+    const color = d3.scaleOrdinal(d3.schemeCategory10)
 
     this.svg
-      .selectAll('path')
+      .selectAll("path")
       .data(data_ready)
       .enter()
-      .append('path')
-      .attr('d', arc)
-      .attr('fill', (d: any, i: any) => color(i.toString()))
-      .style('opacity', 0.7)
-      .on('mouseover', (event: MouseEvent, d: any): any => {
-        const target = event.currentTarget as HTMLElement;
-        d3.select(target).style('opacity', 1);
-        d3.select('.tooltip')
-          .style('left', event.pageX + 'px')
-          .style('top', event.pageY - 30 + 'px')
-          .style('display', 'block')
-          .text(`${d.data.category}: ${d.data.value}`);
+      .append("path")
+      .attr("d", arc)
+      .attr("fill", (d: any, i: any) => color(i.toString()))
+      .style("opacity", 0.7)
+      .on("mouseover", (event: MouseEvent, d: any): any => {
+        const target = event.currentTarget as HTMLElement
+        d3.select(target).style("opacity", 1)
+        d3.select(".tooltip")
+          .style("left", event.pageX + "px")
+          .style("top", event.pageY - 30 + "px")
+          .style("display", "block")
+          .text(`${d.data.category}: ${d.data.value}`)
       })
-      .on('mouseout', (event: MouseEvent) => {
-        const target = event.currentTarget as HTMLElement;
-        d3.select(target).style('opacity', 0.7);
-        d3.select('.tooltip').style('display', 'none');
-      });
+      .on("mouseout", (event: MouseEvent) => {
+        const target = event.currentTarget as HTMLElement
+        d3.select(target).style("opacity", 0.7)
+        d3.select(".tooltip").style("display", "none")
+      })
   }
 }
