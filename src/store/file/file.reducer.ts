@@ -28,10 +28,8 @@ export const { selectHistory, selectSelectedFileName } = fileReducer
 export function injectFileFeature() {
   const store = inject(Store)
   return {
-    addFileToHistory: (file: FileHistory) =>
-      store.dispatch(fileActions.addFileToHistory({ file })),
-    FileFromHistory: (fileName: string) =>
-      store.dispatch(fileActions.selectFileFromHistory({ fileName })),
+    addFileToHistory: (file: FileHistory) => store.dispatch(fileActions.addFileToHistory({ file })),
+    FileFromHistory: (fileName: string) => store.dispatch(fileActions.selectFileFromHistory({ fileName })),
     selectFileFromHistory: () => store.selectSignal(selectSelectedFileName),
     selectHistory: () => store.selectSignal(selectHistory),
   }

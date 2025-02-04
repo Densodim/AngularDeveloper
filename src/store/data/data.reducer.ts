@@ -1,12 +1,7 @@
-import { createFeature, createReducer, on, Store } from "@ngrx/store"
-import { dataActions } from "./data.actions"
-import {
-  DataActionType,
-  DataDirection,
-  DataField,
-  StateDataType,
-} from "../../types/data.types"
-import { inject } from "@angular/core"
+import {createFeature, createReducer, on, Store} from "@ngrx/store"
+import {dataActions} from "./data.actions"
+import {DataActionType, DataDirection, DataField, StateDataType,} from "../../types/data.types"
+import {inject} from "@angular/core"
 
 const initialState: StateDataType = {
   data: [],
@@ -47,7 +42,7 @@ export const dataReducer = createFeature({
       loading: true,
     })),
     // Загружаем данные
-    on(dataActions.setData, (state, { data }) => {
+    on(dataActions.setData, (state, {data}) => {
       const filteredData = filterData(data, state.minValue)
       return {
         ...state,
@@ -58,7 +53,7 @@ export const dataReducer = createFeature({
         loading: false,
       }
     }), // Устанавливаем данные и сортируем, если указано поле сортировки
-    on(dataActions.setMinValue, (state, { minValue }) => {
+    on(dataActions.setMinValue, (state, {minValue}) => {
       const filteredData = filterData(state.originalData, minValue)
       return {
         ...state,
@@ -68,33 +63,31 @@ export const dataReducer = createFeature({
           : filteredData,
       }
     }),
-    on(dataActions.sortData, (state, { field, direction }) => ({
+    on(dataActions.sortData, (state, {field, direction}) => ({
       ...state,
       sortBy: field,
       data: sortData(state.data, field, direction),
     })), // Изменяем поле сортировки и сразу пересортировываем данные
+    on(dataActions.uploadFile, (state) => ({
+      ...state
+    }))
   ),
 })
 
 export const {
-  name,
-  reducer,
   selectDataState,
   selectData,
-  selectLoading,
   selectMinValue,
-  selectOriginalData,
+
 } = dataReducer
 
 export function injectDataFeature() {
   const store = inject<Store<{ data: StateDataType }>>(Store)
   return {
-    setData: (data: DataActionType[]) =>
-      store.dispatch(dataActions.setData({ data })),
-    sortData: (field: DataField, direction: DataDirection) =>
-      store.dispatch(dataActions.sortData({ field, direction })),
-    setMinValue: (minValue: number) =>
-      store.dispatch(dataActions.setMinValue({ minValue })),
+    uploadFile: (file: File) => store.dispatch(dataActions.uploadFile({file})),
+    setData: (data: DataActionType[]) => store.dispatch(dataActions.setData({data})),
+    sortData: (field: DataField, direction: DataDirection) => store.dispatch(dataActions.sortData({field, direction})),
+    setMinValue: (minValue: number) => store.dispatch(dataActions.setMinValue({minValue})),
     selectData: () => store.selectSignal(selectData),
     selectMinValue: () => store.selectSignal(selectMinValue),
   }

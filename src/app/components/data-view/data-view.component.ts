@@ -42,7 +42,7 @@ export class DataViewComponent implements OnInit {
       this.sortDirection = this.sortDirection === 1 ? -1 : 1
     } else {
       this.sortBy = field
-      this.sortDirection = 1 // По умолчанию сортируем по возрастанию
+      this.sortDirection = 1
     }
     // Передаем данные в стор для сортировки
     this.dataFeature.sortData(

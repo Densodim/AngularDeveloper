@@ -20,5 +20,6 @@ export const dataActions = createActionGroup({
     setData: props<{ data: DataActionType[] }>(),
     setMinValue: props<{ minValue: number }>(),
     sortData: props<{ field: DataField; direction: DataDirection }>(),
+    uploadFile:props<{ file: File }>(),
   },
 })

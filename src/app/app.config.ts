@@ -19,8 +19,9 @@ import { providePrimeNG } from "primeng/config"
 import Aura from "@primeng/themes/aura"
 import { fileReducer } from "../store/file/file.reducer"
 import { provideEffects } from "@ngrx/effects"
-import { FileEffects } from "../store/file/file.effects"
+import { FileEffect } from "../lib/effects/file.effect"
 import { MessageService } from "primeng/api"
+import {UploadEffect} from '../lib/effects/upload.effect';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,7 +33,8 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     provideState(dataReducer),
     provideState(fileReducer),
-    provideEffects({ FileEffects }),
+    provideEffects({ FileEffects: FileEffect}),
+    provideEffects({UploadEffects: UploadEffect}),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideAnimationsAsync(),
     providePrimeNG({
