@@ -21,10 +21,7 @@ export class FileHistoryComponent implements OnInit, AfterViewInit {
     this.fileFeature.selectFileFromHistory(),
   )
 
-  constructor(private message: MessageServiceComponent) {
-    // this.fileHistory$ = this.store.select(selectHistory);
-    // this.selectedFile$ = this.store.select(selectSelectedFileName);
-  }
+  constructor(private message: MessageServiceComponent) {}
 
   ngOnInit(): void {}
 

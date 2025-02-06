@@ -78,7 +78,6 @@ export const {
   selectDataState,
   selectData,
   selectMinValue,
-
 } = dataReducer
 
 export function injectDataFeature() {
