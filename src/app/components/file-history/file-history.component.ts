@@ -8,27 +8,25 @@ import { MessageServiceComponent } from "../../../lib/message-service/message-se
 import { toObservable } from "@angular/core/rxjs-interop"
 
 @Component({
-  selector: "app-file-history",
-  imports: [TableModule, AsyncPipe, Button],
-  templateUrl: "./file-history.component.html",
-  standalone: true,
-  styleUrl: "./file-history.component.less",
+	selector: "app-file-history",
+	imports: [TableModule, AsyncPipe, Button],
+	templateUrl: "./file-history.component.html",
+	standalone: true,
+	styleUrl: "./file-history.component.less",
 })
 export class FileHistoryComponent implements OnInit, AfterViewInit {
-  readonly fileFeature = injectFileFeature()
-  fileHistory$: Observable<any> = toObservable(this.fileFeature.selectHistory())
-  selectedFile$: Observable<string | null> = toObservable(
-    this.fileFeature.selectFileFromHistory(),
-  )
+	readonly fileFeature = injectFileFeature()
+	fileHistory$: Observable<any> = toObservable(this.fileFeature.selectHistory())
+	selectedFile$: Observable<string | null> = toObservable(this.fileFeature.selectFileFromHistory())
 
-  constructor(private message: MessageServiceComponent) {}
+	constructor(private message: MessageServiceComponent) {}
 
-  ngOnInit(): void {}
+	ngOnInit(): void {}
 
-  ngAfterViewInit(): void {}
+	ngAfterViewInit(): void {}
 
-  selectFile(fileName: string) {
-    this.fileFeature.FileFromHistory(fileName)
-    this.message.showSuccess("File Selected successfully.")
-  }
+	selectFile(fileName: string) {
+		this.fileFeature.FileFromHistory(fileName)
+		this.message.showSuccess("File Selected successfully.")
+	}
 }

@@ -1,10 +1,6 @@
 import { createActionGroup, props } from "@ngrx/store"
 
-import {
-  DataActionType,
-  DataDirection,
-  DataField,
-} from "../../types/data.types"
+import { DataActionType, DataDirection, DataField } from "../../types/data.types"
 
 // export const dataActions = {
 //   setLoading: createAction('[Actin Data] Set Loading', props<{ data: DataActionType[] }>()),
@@ -14,12 +10,12 @@ import {
 // };
 
 export const dataActions = createActionGroup({
-  source: "DATA",
-  events: {
-    setLoading: props<{ data: DataActionType[] }>(),
-    setData: props<{ data: DataActionType[] }>(),
-    setMinValue: props<{ minValue: number }>(),
-    sortData: props<{ field: DataField; direction: DataDirection }>(),
-    uploadFile:props<{ file: File }>(),
-  },
+	source: "DATA",
+	events: {
+		setLoading: props<{ data: DataActionType[] }>(),
+		setData: props<{ data: DataActionType[] }>(),
+		setMinValue: props<{ minValue: number }>(),
+		sortData: props<{ field: DataField; direction: DataDirection }>(),
+		uploadFile: props<{ file: File }>(),
+	},
 })

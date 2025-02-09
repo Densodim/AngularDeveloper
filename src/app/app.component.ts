@@ -11,26 +11,26 @@ import { Toast } from "primeng/toast"
 import { StateDataType } from "../types/data.types"
 
 @Component({
-  selector: "app-root",
-  imports: [
-    RouterOutlet,
-    UploadComponent,
-    PieChartComponent,
-    BarChartComponent,
-    DataViewComponent,
-    Toast,
-  ],
-  templateUrl: "./app.component.html",
-  standalone: true,
-  styleUrl: "./app.component.less",
+	selector: "app-root",
+	imports: [
+		RouterOutlet,
+		UploadComponent,
+		PieChartComponent,
+		BarChartComponent,
+		DataViewComponent,
+		Toast,
+	],
+	templateUrl: "./app.component.html",
+	standalone: true,
+	styleUrl: "./app.component.less",
 })
 export class AppComponent implements OnInit {
-  title = "AngularDeveloper"
-  data$: Observable<StateDataType>
+	title = "AngularDeveloper"
+	data$: Observable<StateDataType>
 
-  constructor(private store: Store<{ data: StateDataType }>) {
-    this.data$ = this.store.select(selectDataState)
-  }
+	constructor(private store: Store<{ data: StateDataType }>) {
+		this.data$ = this.store.select(selectDataState)
+	}
 
-  ngOnInit() {}
+	ngOnInit() {}
 }

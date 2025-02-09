@@ -12,9 +12,10 @@
    "formatter": {
      "enabled": true,
      "formatWithErrors": false,
-     "indentStyle": "space",
+     "indentStyle": "tab",
      "indentWidth": 2,
-     "lineEnding": "lf",
+     "lineEnding": "crlf",
+     "lineWidth": 100,
      "attributePosition": "auto"
    },
    "organizeImports": {
@@ -40,4 +41,3 @@
      }
    }
  }
- 
