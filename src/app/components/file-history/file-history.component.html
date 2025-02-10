@@ -10,7 +10,7 @@
   <ng-template pTemplate="body" let-file>
     <tr >
       <td>{{ file.fileName }}</td>
-      <td>{{ file.uploadDate }}</td>
+      <td>{{ file.uploadDate | date:'medium'}}</td>
       <td><p-button label="Select" variant="text" severity="info" (click)="selectFile(file.fileName)"/></td>
     </tr>
   </ng-template>

@@ -2,14 +2,14 @@ import { AfterViewInit, Component, OnInit } from "@angular/core"
 import { Observable } from "rxjs"
 import { injectFileFeature } from "../../../store/file/file.reducer"
 import { TableModule } from "primeng/table"
-import { AsyncPipe } from "@angular/common"
+import {AsyncPipe, DatePipe} from "@angular/common"
 import { Button } from "primeng/button"
 import { MessageServiceComponent } from "../../../lib/message-service/message-service.component"
 import { toObservable } from "@angular/core/rxjs-interop"
 
 @Component({
 	selector: "app-file-history",
-	imports: [TableModule, AsyncPipe, Button],
+	imports: [TableModule, AsyncPipe, Button, DatePipe],
 	templateUrl: "./file-history.component.html",
 	standalone: true,
 	styleUrl: "./file-history.component.less",
